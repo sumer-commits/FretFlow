@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "fretflow",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["serve", "-p", "4200", "/Users/Sumer/Claude-Projects/FretFlow"],
+      "port": 4200
+    }
+  ]
+}

@@ -1,0 +1,59 @@
+/* ─── DESIGN TOKENS — ARCTIC GLASS ─────────────────────────────────────── */
+:root {
+  /* Old token names retained so existing CSS still works,
+     but they now point to Arctic values. */
+  --wood-dark:      #060c14;                  /* page background */
+  --wood-mid:       #0c1825;                  /* card base */
+  --wood-light:     #122436;                  /* card hover */
+  --wood-grain:     #0f1d2e;                  /* button base */
+  --wood-highlight: #1a3047;                  /* button hover */
+  --mahogany:       #818cf8;                  /* accent dark → indigo */
+  --walnut:         #818cf8;                  /* scale-note dots → indigo */
+  --maple:          #a0c0cc;                  /* secondary highlight */
+  --spruce:         #e8f4f8;                  /* text on dark */
+  --cream:          #e8f4f8;                  /* primary text */
+  --parchment:      #e8f4f8;                  /* input text */
+  --gold:           #22d3ee;                  /* primary accent → cyan */
+  --gold-bright:    #67e8f9;                  /* hover accent */
+  --gold-glow:      #5eead4;                  /* glow */
+  --amber:          #34d399;                  /* secondary → success green */
+  --rust:           #f87171;                  /* danger / flamenco */
+  --copper:         #818cf8;                  /* tertiary → indigo */
+  --string-color:   #22d3ee;                  /* fretboard strings → cyan */
+  --text-primary:   #060c14;                  /* on light surfaces */
+  --text-sec:       #a0c0cc;
+  --text-muted:     #4a7a8a;
+  --text-light:     #a0c0cc;
+  --text-on-dark:   #e8f4f8;
+  --border-warm:    rgba(34,211,238,0.12);
+  --border-gold:    rgba(34,211,238,0.30);
+}
+
+/* ─── RESET & BASE ──────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  background-color: var(--wood-dark);
+  background-image:
+    radial-gradient(ellipse 80% 50% at 20% 0%,   rgba(34,211,238,0.05) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 40% at 90% 100%, rgba(129,140,248,0.04) 0%, transparent 60%);
+  background-attachment: fixed;
+  color: var(--cream);
+  min-height: 100vh;
+  line-height: 1.6;
+}
+
+/* ─── SCROLLBAR ─────────────────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: var(--wood-dark); }
+::-webkit-scrollbar-thumb { background: var(--wood-grain); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--walnut); }
+
+/* ─── TYPOGRAPHY ────────────────────────────────────────────────────────── */
+h1, h2, h3, h4 { font-family: 'Playfair Display', serif; font-weight: 700; color: var(--cream); }
+.mono { font-family: 'JetBrains Mono', monospace; }
+

@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FretFlow — Guitar Learning Platform</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet" href="css/tokens.css">
+<link rel="stylesheet" href="css/layout.css">
+<link rel="stylesheet" href="css/home.css">
+<link rel="stylesheet" href="css/fretboard.css">
+<link rel="stylesheet" href="css/scales.css">
+<link rel="stylesheet" href="css/chords.css">
+<link rel="stylesheet" href="css/circle-of-fifths.css">
+<link rel="stylesheet" href="css/transposer.css">
+<link rel="stylesheet" href="css/tuner.css">
+<link rel="stylesheet" href="css/songs.css">
+<link rel="stylesheet" href="css/learning-paths.css">
+<link rel="stylesheet" href="css/metronome.css">
+</head>
+<body>
+
+<!-- ═══ NAV ═══════════════════════════════════════════════════════════════ -->
+<nav>
+  <div class="nav-logo">FretFlow</div>
+  <button class="nav-btn active" onclick="go('home')"><i class="fa-solid fa-house"></i> Home</button>
+  <button class="nav-btn" onclick="go('fretboard')"><i class="fa-solid fa-guitar"></i> Fretboard</button>
+  <button class="nav-btn" onclick="go('scales')"><i class="fa-solid fa-music"></i> Scales</button>
+  <button class="nav-btn" onclick="go('chords')"><i class="fa-solid fa-hand"></i> Chords</button>
+  <button class="nav-btn" onclick="go('cof')"><i class="fa-solid fa-circle-dot"></i> Circle of Fifths</button>
+  <button class="nav-btn" onclick="go('transposer')"><i class="fa-solid fa-arrows-left-right"></i> Transposer</button>
+  <button class="nav-btn" onclick="go('tuner')"><i class="fa-solid fa-microphone"></i> Tuner</button>
+  <button class="nav-btn" onclick="go('songs')"><i class="fa-solid fa-book-open"></i> Songs</button>
+  <button class="nav-btn" onclick="go('learn')"><i class="fa-solid fa-graduation-cap"></i> Learn</button>
+  <button class="nav-btn" onclick="openMetronome()"><i class="fa-solid fa-clock"></i> Metronome</button>
+</nav>
+
+<!-- ═══ SECTION 1: HOME (Arctic glass redesign) ════════════════════════════ -->
+<section id="home" class="active">
+
+  <!-- Aurora ambience -->
+  <div class="aurora aurora-1"></div>
+  <div class="aurora aurora-2"></div>
+
+  <!-- Hero -->
+  <div class="hero-arctic">
+    <div class="hero-eyebrow">Guitar Learning Platform</div>
+    <h1>FretFlow</h1>
+    <p class="lead">Every scale, chord, and song — entirely in your browser.<br>No account. No ads. No internet required after load.</p>
+    <div class="cta-row">
+      <button class="btn-arctic-accent" onclick="go('fretboard')">
+        <i class="fa-solid fa-guitar"></i> Explore Fretboard
+      </button>
+      <button class="btn-arctic-ghost" onclick="go('learn')">
+        <i class="fa-solid fa-graduation-cap"></i> Learning Paths
+      </button>
+    </div>
+  </div>
+
+  <!-- Bento grid -->
+  <div class="bento-wrap">
+    <div class="bento-label">All Tools</div>
+    <div class="bento-grid">
+
+      <!-- Row 1: Fretboard (span 2) + Tuner + Scales -->
+      <div class="bento-card glow" data-span="2" style="grid-column:span 2;" onclick="go('fretboard')">
+        <div class="bento-top-line" style="background:linear-gradient(90deg,transparent,#818cf8,transparent);"></div>
+        <div class="bento-head">
+          <div class="bento-name" style="color:#818cf8;">Fretboard</div>
+          <i class="fa-solid fa-guitar bento-icon" style="color:rgba(129,140,248,0.4);"></i>
+        </div>
+        <div class="bento-desc">Visualise any scale across 22 frets</div>
+        <div class="bento-dot" style="background:#818cf8; box-shadow:0 0 10px #818cf8;"></div>
+      </div>
+
+      <div class="bento-card" onclick="go('tuner')">
+        <div class="bento-top-line" style="background:linear-gradient(90deg,transparent,#34d399,transparent);"></div>
+        <div class="bento-head">
+          <div class="bento-name" style="color:#34d399;">Tuner</div>
+          <i class="fa-solid fa-signal bento-icon" style="color:rgba(52,211,153,0.4);"></i>
+        </div>
+        <div class="bento-desc">Chromatic pitch detection</div>
+        <div class="bento-dot" style="background:#34d399; box-shadow:0 0 10px #34d399;"></div>
+      </div>
+
+      <div class="bento-card" onclick="go('scales')">
+        <div class="bento-top-line" style="background:linear-gradient(90deg,transparent,#22d3ee,transparent);"></div>
+        <div class="bento-head">
+          <div class="bento-name" style="color:#22d3ee;">Scales</div>
+          <i class="fa-solid fa-music bento-icon" style="color:rgba(34,211,238,0.4);"></i>
+        </div>
+        <div class="bento-desc">40+ scales with audio playback</div>
+        <div class="bento-dot" style="background:#22d3ee; box-shadow:0 0 10px #22d3ee;"></div>
+      </div>
+
+      <!-- Row 2: Chords + Songs (span 2) + Circle -->
+      <div class="bento-card" onclick="go('chords')">
+        <div class="bento-top-line" style="background:linear-gradient(90deg,transparent,#818cf8,transparent);"></div>
+        <div class="bento-head">
+          <div class="bento-name" style="color:#818cf8;">Chords</div>
+          <i class="fa-solid fa-layer-group bento-icon" style="color:rgba(129,140,248,0.4);"></i>
+        </div>
+        <div class="bento-desc">Complete chord diagram library</div>
+        <div class="bento-dot" style="background:#818cf8; box-shadow:0 0 10px #818cf8;"></div>
+      </div>
+
+      <div class="bento-card" data-span="2" style="grid-column:span 2;" onclick="go('songs')">
+        <div class="bento-top-line" style="background:linear-gradient(90deg,transparent,#f87171,transparent);"></div>
+        <div class="bento-head">
+          <div class="bento-name" style="color:#f87171;">Songs</div>
+          <i class="fa-solid fa-headphones bento-icon" style="color:rgba(248,113,113,0.4);"></i>
+        </div>
+        <div class="bento-desc">Play-along with chords &amp; lyrics</div>
+        <div class="bento-dot" style="background:#f87171; box-shadow:0 0 10px #f87171;"></div>
+      </div>
+
+      <div class="bento-card" onclick="go('cof')">
+        <div class="bento-top-line" style="background:linear-gradient(90deg,transparent,#22d3ee,transparent);"></div>
+        <div class="bento-head">
+          <div class="bento-name" style="color:#22d3ee;">Circle of 5ths</div>
+          <i class="fa-solid fa-circle-dot bento-icon" style="color:rgba(34,211,238,0.4);"></i>
+        </div>
+        <div class="bento-desc">Key relationships at a glance</div>
+        <div class="bento-dot" style="background:#22d3ee; box-shadow:0 0 10px #22d3ee;"></div>
+      </div>
+
+      <!-- Row 3: Learn + Metronome + Transposer -->
+      <div class="bento-card" onclick="go('learn')">
+        <div class="bento-top-line" style="background:linear-gradient(90deg,transparent,#34d399,transparent);"></div>
+        <div class="bento-head">
+          <div class="bento-name" style="color:#34d399;">Learn</div>
+          <i class="fa-solid fa-graduation-cap bento-icon" style="color:rgba(52,211,153,0.4);"></i>
+        </div>
+        <div class="bento-desc">Structured guitar learning paths</div>
+        <div class="bento-dot" style="background:#34d399; box-shadow:0 0 10px #34d399;"></div>
+      </div>
+
+      <div class="bento-card" onclick="openMetronome()">
+        <div class="bento-top-line" style="background:linear-gradient(90deg,transparent,#818cf8,transparent);"></div>
+        <div class="bento-head">
+          <div class="bento-name" style="color:#818cf8;">Metronome</div>
+          <i class="fa-solid fa-clock bento-icon" style="color:rgba(129,140,248,0.4);"></i>
+        </div>
+        <div class="bento-desc">Sample-accurate click track</div>
+        <div class="bento-dot" style="background:#818cf8; box-shadow:0 0 10px #818cf8;"></div>
+      </div>
+
+      <div class="bento-card" onclick="go('transposer')">
+        <div class="bento-top-line" style="background:linear-gradient(90deg,transparent,#f87171,transparent);"></div>
+        <div class="bento-head">
+          <div class="bento-name" style="color:#f87171;">Transpose</div>
+          <i class="fa-solid fa-arrows-up-down bento-icon" style="color:rgba(248,113,113,0.4);"></i>
+        </div>
+        <div class="bento-desc">Shift any song to any key instantly</div>
+        <div class="bento-dot" style="background:#f87171; box-shadow:0 0 10px #f87171;"></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Footer line -->
+  <div class="home-footer">
+    FretFlow v4 &nbsp;·&nbsp; All tools run in your browser &nbsp;·&nbsp; No account &nbsp;·&nbsp; No ads
+  </div>
+
+</section>
+
+<!-- ═══ SECTION 2: FRETBOARD ═══════════════════════════════════════════════ -->
+<section id="fretboard">
+  <div class="container" style="max-width:1200px;">
+
+    <div class="fb-header">
+      <h2><i class="fa-solid fa-guitar" style="color:var(--gold);font-size:22px;margin-right:8px;"></i>Fretboard Explorer</h2>
+    </div>
+
+    <!-- Controls -->
+    <div class="fb-controls">
+      <div class="ctrl-group">
+        <label>Root Note</label>
+        <select id="fb-root" class="ctrl-select" onchange="renderFretboard()">
+          <option value="0">C</option>
+          <option value="1">C# / Db</option>
+          <option value="2">D</option>
+          <option value="3">D# / Eb</option>
+          <option value="4">E</option>
+          <option value="5">F</option>
+          <option value="6">F# / Gb</option>
+          <option value="7">G</option>
+          <option value="8">G# / Ab</option>
+          <option value="9">A</option>
+          <option value="10">A# / Bb</option>
+          <option value="11">B</option>
+        </select>
+      </div>
+
+      <div class="ctrl-group" style="flex:1;min-width:200px;">
+        <label>Scale Type</label>
+        <select id="fb-scale" class="ctrl-select" onchange="renderFretboard()" style="width:100%;">
+          <optgroup label="Diatonic / Major Modes">
+            <option value="major">Major (Ionian)</option>
+            <option value="dorian">Dorian</option>
+            <option value="phrygian">Phrygian</option>
+            <option value="lydian">Lydian</option>
+            <option value="mixolydian">Mixolydian</option>
+            <option value="aeolian">Natural Minor (Aeolian)</option>
+            <option value="locrian">Locrian</option>
+          </optgroup>
+          <optgroup label="Pentatonic">
+            <option value="pent_maj">Pentatonic Major</option>
+            <option value="pent_min">Pentatonic Minor</option>
+          </optgroup>
+          <optgroup label="Blues">
+            <option value="blues">Blues Scale</option>
+            <option value="blues_maj">Blues Major</option>
+          </optgroup>
+          <optgroup label="Harmonic / Melodic">
+            <option value="harm_min">Harmonic Minor</option>
+            <option value="mel_min">Melodic Minor</option>
+            <option value="harm_maj">Harmonic Major</option>
+          </optgroup>
+          <optgroup label="Exotic / World">
+            <option value="phryg_dom">Phrygian Dominant</option>
+            <option value="byzantine">Double Harmonic (Byzantine)</option>
+            <option value="hijaz">Arabic / Hijaz</option>
+            <option value="hung_min">Hungarian Minor</option>
+            <option value="neap_min">Neapolitan Minor</option>
+            <option value="romanian">Romanian Minor</option>
+            <option value="enigmatic">Enigmatic</option>
+            <option value="persian">Persian</option>
+          </optgroup>
+          <optgroup label="Symmetric">
+            <option value="whole_tone">Whole Tone</option>
+            <option value="dim_wh">Diminished (W-H)</option>
+            <option value="dim_hw">Diminished (H-W)</option>
+            <option value="augmented">Augmented</option>
+            <option value="prometheus">Prometheus</option>
+          </optgroup>
+          <optgroup label="Bebop / Jazz">
+            <option value="bebop_dom">Bebop Dominant</option>
+            <option value="bebop_maj">Bebop Major</option>
+            <option value="bebop_min">Bebop Minor</option>
+            <option value="jazz_mel">Jazz Melodic Minor</option>
+          </optgroup>
+          <optgroup label="Japanese">
+            <option value="yo">Yo</option>
+            <option value="in_scale">In</option>
+            <option value="hirajoshi">Hirajoshi</option>
+            <option value="iwato">Iwato</option>
+            <option value="insen">Insen</option>
+          </optgroup>
+          <optgroup label="Other">
+            <option value="octatonic">Octatonic</option>
+          </optgroup>
+        </select>
+      </div>
+
+      <div class="ctrl-group">
+        <label>View Mode</label>
+        <div class="view-toggle">
+          <button id="vm-notes"     class="toggle-btn active" onclick="setFbView('notes')">Notes</button>
+          <button id="vm-intervals" class="toggle-btn"        onclick="setFbView('intervals')">Intervals</button>
+          <button id="vm-dots"      class="toggle-btn"        onclick="setFbView('dots')">Dots</button>
+        </div>
+      </div>
+
+      <div class="ctrl-group">
+        <label>Frets</label>
+        <select id="fb-frets" class="ctrl-select" onchange="renderFretboard()">
+          <option value="12">12</option>
+          <option value="15">15</option>
+          <option value="17">17</option>
+          <option value="22" selected>22</option>
+          <option value="24">24</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Fretboard SVG (scrollable) -->
+    <div class="fb-scroll-wrap">
+      <div id="fb-container"></div>
+    </div>
+
+    <!-- Legend -->
+    <div class="fb-legend">
+      <div class="legend-item">
+        <div class="legend-dot root"></div>
+        Root Note
+      </div>
+      <div class="legend-item">
+        <div class="legend-dot scale-note"></div>
+        Scale Note
+      </div>
+      <div class="legend-item" style="margin-left:8px; color:var(--text-light); font-size:11px;">
+        <i class="fa-solid fa-hand-pointer" style="color:var(--gold-bright);"></i>
+        &nbsp;Click any note to hear it
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══ SECTION 3: SCALES LIBRARY ════════════════════════════════════════ -->
+<section id="scales">
+  <div class="container" style="max-width:1200px;">
+
+    <div class="fb-header">
+      <h2><i class="fa-solid fa-music" style="color:var(--gold);font-size:22px;margin-right:8px;"></i>Scales Library</h2>
+    </div>
+
+    <!-- Filters -->
+    <div class="scales-filters">
+      <div class="filter-row">
+        <span class="filter-label">Genre</span>
+        <div id="sf-genre" style="display:flex;gap:6px;flex-wrap:wrap;">
+          <button class="filter-pill active" data-val="All" onclick="setScaleFilter('genre','All')">All</button>
+          <button class="filter-pill" data-val="Rock"      onclick="setScaleFilter('genre','Rock')">Rock</button>
+          <button class="filter-pill" data-val="Blues"     onclick="setScaleFilter('genre','Blues')">Blues</button>
+          <button class="filter-pill" data-val="Jazz"      onclick="setScaleFilter('genre','Jazz')">Jazz</button>
+          <button class="filter-pill" data-val="Flamenco"  onclick="setScaleFilter('genre','Flamenco')">Flamenco</button>
+          <button class="filter-pill" data-val="Classical" onclick="setScaleFilter('genre','Classical')">Classical</button>
+          <button class="filter-pill" data-val="Metal"     onclick="setScaleFilter('genre','Metal')">Metal</button>
+          <button class="filter-pill" data-val="World"     onclick="setScaleFilter('genre','World')">World</button>
+        </div>
+      </div>
+      <div class="filter-row">
+        <span class="filter-label">Difficulty</span>
+        <div id="sf-diff" style="display:flex;gap:6px;flex-wrap:wrap;">
+          <button class="filter-pill active" data-val="All"          onclick="setScaleFilter('diff','All')">All</button>
+          <button class="filter-pill" data-val="Beginner"     onclick="setScaleFilter('diff','Beginner')">Beginner</button>
+          <button class="filter-pill" data-val="Intermediate" onclick="setScaleFilter('diff','Intermediate')">Intermediate</button>
+          <button class="filter-pill" data-val="Advanced"     onclick="setScaleFilter('diff','Advanced')">Advanced</button>
+        </div>
+      </div>
+      <div class="filter-row">
+        <span class="filter-label">Type</span>
+        <div id="sf-type" style="display:flex;gap:6px;flex-wrap:wrap;">
+          <button class="filter-pill active" data-val="All"        onclick="setScaleFilter('type','All')">All</button>
+          <button class="filter-pill" data-val="Diatonic"   onclick="setScaleFilter('type','Diatonic')">Diatonic</button>
+          <button class="filter-pill" data-val="Pentatonic" onclick="setScaleFilter('type','Pentatonic')">Pentatonic</button>
+          <button class="filter-pill" data-val="Blues"      onclick="setScaleFilter('type','Blues')">Blues</button>
+          <button class="filter-pill" data-val="Modal"      onclick="setScaleFilter('type','Modal')">Modal</button>
+          <button class="filter-pill" data-val="Exotic"     onclick="setScaleFilter('type','Exotic')">Exotic</button>
+          <button class="filter-pill" data-val="Symmetric"  onclick="setScaleFilter('type','Symmetric')">Symmetric</button>
+          <button class="filter-pill" data-val="Bebop"      onclick="setScaleFilter('type','Bebop')">Bebop</button>
+          <button class="filter-pill" data-val="Japanese"   onclick="setScaleFilter('type','Japanese')">Japanese</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scale Cards Grid -->
+    <div class="scales-grid" id="scales-grid"></div>
+
+    <!-- Detail Panel -->
+    <div class="scale-detail" id="scale-detail" style="display:none;"></div>
+
+  </div>
+</section>
+
+<!-- ═══ SECTION 4: CHORD EXPLORER ════════════════════════════════════════ -->
+<section id="chords">
+  <div class="container" style="max-width:1200px;">
+    <div class="fb-header">
+      <h2><i class="fa-solid fa-hand" style="color:var(--gold);font-size:22px;margin-right:8px;"></i>Chord Explorer</h2>
+    </div>
+    <div class="chords-controls">
+      <input id="chord-search" class="chord-search" type="text" placeholder="Search chords… (e.g. Am7, sus4)" oninput="renderChords()">
+    </div>
+    <div class="chord-type-row" id="chord-type-row"></div>
+    <div class="chords-grid" id="chords-grid"></div>
+  </div>
+</section>
+
+<!-- ═══ SECTION 5: CIRCLE OF FIFTHS ═════════════════════════════════════ -->
+<section id="cof">
+  <div class="container" style="max-width:1000px;">
+    <div class="fb-header">
+      <h2><i class="fa-solid fa-circle-dot" style="color:var(--gold);font-size:22px;margin-right:8px;"></i>Circle of Fifths</h2>
+    </div>
+    <div class="cof-layout">
+      <canvas id="cof-canvas" width="340" height="340"></canvas>
+      <div class="cof-info" id="cof-info">
+        <div class="cof-placeholder">
+          <i class="fa-solid fa-circle-dot"></i>
+          <p>Click a key on the circle to explore its diatonic chords, relative minor, and neighbour keys.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SECTION 6: CHORD TRANSPOSER ═════════════════════════════════════ -->
+<section id="transposer">
+  <div class="container" style="max-width:900px;">
+    <div class="fb-header">
+      <h2><i class="fa-solid fa-arrows-left-right" style="color:var(--gold);font-size:22px;margin-right:8px;"></i>Chord Transposer</h2>
+    </div>
+    <div class="trp-top">
+      <div style="display:flex;flex-direction:column;gap:4px;">
+        <span style="font-size:10px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-muted);">Current Key</span>
+        <div class="trp-key-display" id="trp-key-display">—</div>
+      </div>
+      <div class="trp-shift-btns">
+        <button class="trp-shift-btn" onclick="trpShift(-7)">−7</button>
+        <button class="trp-shift-btn" onclick="trpShift(-5)">−5</button>
+        <button class="trp-shift-btn" onclick="trpShift(-2)">−2</button>
+        <button class="trp-shift-btn" onclick="trpShift(-1)">−1</button>
+        <button class="trp-shift-btn" onclick="trpShift(1)">+1</button>
+        <button class="trp-shift-btn" onclick="trpShift(2)">+2</button>
+        <button class="trp-shift-btn" onclick="trpShift(5)">+5</button>
+        <button class="trp-shift-btn" onclick="trpShift(7)">+7</button>
+      </div>
+      <button class="btn btn-wood" onclick="trpDetectKey()"><i class="fa-solid fa-magnifying-glass"></i> Auto-detect Key</button>
+      <button class="btn btn-ghost" onclick="trpReset()"><i class="fa-solid fa-rotate-left"></i> Reset</button>
+    </div>
+    <div class="trp-detect-banner" id="trp-detect-banner"></div>
+    <div class="trp-two-col">
+      <div class="trp-panel">
+        <span class="trp-label"><i class="fa-solid fa-pen"></i> Input</span>
+        <textarea id="trp-input" class="trp-textarea" spellcheck="false" oninput="trpUpdate()" placeholder="Paste chord sheet here…"></textarea>
+      </div>
+      <div class="trp-panel">
+        <span class="trp-label"><i class="fa-solid fa-arrow-right"></i> Transposed</span>
+        <div id="trp-output" class="trp-output"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SECTION 7: CHROMATIC TUNER ═══════════════════════════════════════ -->
+<section id="tuner">
+  <div class="container" style="max-width:900px;">
+    <div class="fb-header">
+      <h2><i class="fa-solid fa-microphone" style="color:var(--gold);font-size:22px;margin-right:8px;"></i>Chromatic Tuner</h2>
+    </div>
+    <div class="tuner-wrap">
+      <div class="tuner-card">
+
+        <!-- Note name -->
+        <div class="tuner-note-row">
+          <div class="tuner-note" id="tuner-note">—</div>
+        </div>
+        <div class="tuner-freq" id="tuner-freq">— Hz</div>
+        <div class="tuner-cents" id="tuner-cents">Press Start to begin</div>
+
+        <!-- Meter canvas -->
+        <canvas id="tuner-canvas" width="300" height="160"></canvas>
+
+        <!-- Status -->
+        <div class="tuner-status">
+          <div class="status-dot" id="tuner-dot"></div>
+          <span id="tuner-status">Microphone off</span>
+        </div>
+
+        <!-- Start/Stop -->
+        <div style="text-align:center; margin-bottom:16px;">
+          <button class="btn btn-gold" id="tuner-btn" onclick="toggleTuner()" style="min-width:160px;">
+            <i class="fa-solid fa-microphone"></i> Start Tuning
+          </button>
+        </div>
+
+        <!-- String selectors -->
+        <div class="string-selectors" id="string-selectors"></div>
+        <div class="tuner-target" id="tuner-target"></div>
+
+        <!-- Alternate tunings -->
+        <div class="alt-tunings-label">Alternate Tunings</div>
+        <div class="alt-tunings" id="alt-tunings"></div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SECTION 8: SONG LIBRARY ═══════════════════════════════════════════ -->
+<section id="songs">
+  <div class="container" style="max-width:1200px;">
+    <div class="fb-header">
+      <h2><i class="fa-solid fa-book-open" style="color:var(--gold);font-size:22px;margin-right:8px;"></i>Song Library</h2>
+    </div>
+    <div class="songs-top">
+      <input id="song-search" class="song-search" type="text" placeholder="Search songs or artists…" oninput="renderSongs()">
+      <div class="diff-pills">
+        <button class="diff-pill active" data-val="all"    onclick="setSongDiff('all')">All</button>
+        <button class="diff-pill" data-val="easy"   onclick="setSongDiff('easy')">Easy</button>
+        <button class="diff-pill" data-val="medium" onclick="setSongDiff('medium')">Medium</button>
+        <button class="diff-pill" data-val="hard"   onclick="setSongDiff('hard')">Hard</button>
+      </div>
+    </div>
+    <div class="genre-tabs" id="genre-tabs"></div>
+    <div class="songs-grid" id="songs-grid"></div>
+    <div class="pagination" id="songs-pagination"></div>
+    <div id="play-panel-wrap"></div>
+    <div id="flamenco-module"></div>
+  </div>
+</section>
+
+<!-- ═══ SECTION 9: LEARNING PATHS ════════════════════════════════════════ -->
+<section id="learn">
+  <div class="container" style="max-width:800px;">
+    <div class="fb-header">
+      <h2><i class="fa-solid fa-graduation-cap" style="color:var(--gold);font-size:22px;margin-right:8px;"></i>Learning Paths</h2>
+    </div>
+    <div class="path-tabs" id="path-tabs"></div>
+    <div class="progress-wrap">
+      <div class="progress-label">
+        <span id="path-label">Progress</span>
+        <span id="path-pct">0%</span>
+      </div>
+      <div class="progress-track"><div class="progress-fill" id="path-progress" style="width:0%"></div></div>
+    </div>
+    <div class="lesson-list" id="lesson-list"></div>
+  </div>
+</section>
+
+<!-- ═══ METRONOME OVERLAY ═════════════════════════════════════════════════ -->
+<div id="metro-overlay" style="display:none;position:fixed;inset:0;z-index:1000;background:rgba(10,5,2,0.85);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);align-items:center;justify-content:center;overflow-y:auto;">
+  <div class="metro-box">
+    <button class="metro-close" onclick="closeMetronome()"><i class="fa-solid fa-xmark"></i></button>
+    <div class="metro-title"><i class="fa-solid fa-clock" style="color:var(--gold);margin-right:8px;font-size:18px;"></i>Metronome</div>
+
+    <!-- SVG Pendulum -->
+    <svg id="metro-pendulum" viewBox="0 0 120 200" width="120" height="200" style="display:block;margin:0 auto 4px;" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="bob-g" cx="38%" cy="33%" r="65%">
+          <stop offset="0%" stop-color="#67e8f9"/>
+          <stop offset="55%" stop-color="#22d3ee"/>
+          <stop offset="100%" stop-color="#0c1825"/>
+        </radialGradient>
+        <radialGradient id="plate-g" cx="50%" cy="0%" r="100%">
+          <stop offset="0%" stop-color="#1a3047"/>
+          <stop offset="100%" stop-color="#060c14"/>
+        </radialGradient>
+      </defs>
+      <!-- Housing plate -->
+      <rect x="10" y="0" width="100" height="24" rx="5" fill="url(#plate-g)" stroke="rgba(212,164,67,0.35)" stroke-width="1"/>
+      <line x1="30" y1="8" x2="90" y2="8" stroke="rgba(212,164,67,0.2)" stroke-width="1"/>
+      <!-- Pivot -->
+      <circle cx="60" cy="14" r="5" fill="#1a0f08" stroke="rgba(212,164,67,0.5)" stroke-width="1.5"/>
+      <!-- Rod -->
+      <line id="metro-rod" x1="60" y1="14" x2="60" y2="157" stroke="rgba(200,168,75,0.65)" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- Bob -->
+      <circle id="metro-bob" cx="60" cy="175" r="18" fill="url(#bob-g)" stroke="rgba(212,164,67,0.55)" stroke-width="1.5"/>
+      <text id="metro-beat-num" x="60" y="180" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="13" font-weight="700" fill="#1a0f08">1</text>
+    </svg>
+
+    <!-- BPM display -->
+    <div class="metro-bpm-display" id="metro-bpm-display">120</div>
+    <div class="metro-bpm-label">BPM</div>
+
+    <!-- Beat dots -->
+    <div class="beat-dots" id="beat-dots"></div>
+
+    <!-- Slider -->
+    <div class="metro-slider-wrap">
+      <input type="range" class="metro-slider" id="metro-slider" min="30" max="300" value="120" oninput="metroSetBpm(parseInt(this.value))">
+    </div>
+
+    <!-- Controls -->
+    <div class="metro-controls">
+      <button class="metro-adj-btn" onclick="metroAdjBpm(-10)">−10</button>
+      <button class="metro-adj-btn" onclick="metroAdjBpm(-5)">−5</button>
+      <button class="metro-start-btn" id="metro-start-btn" onclick="toggleMetronome()">
+        <i class="fa-solid fa-play"></i> Start
+      </button>
+      <button class="metro-adj-btn" onclick="metroAdjBpm(5)">+5</button>
+      <button class="metro-adj-btn" onclick="metroAdjBpm(10)">+10</button>
+    </div>
+
+    <!-- Tap Tempo -->
+    <button class="metro-tap-btn" id="metro-tap-btn" onclick="tapTempo()">
+      <i class="fa-solid fa-hand-pointer"></i> Tap Tempo
+    </button>
+
+    <!-- Time Signature -->
+    <div class="time-sig-row" id="time-sig-row"></div>
+  </div>
+</div>
+
+<!-- ═══ FOOTER ═════════════════════════════════════════════════════════════ -->
+<footer>
+  <span>FretFlow</span> &nbsp;<i class="fa-solid fa-circle" style="font-size:4px;vertical-align:middle;"></i>&nbsp; v4.0 &nbsp;<i class="fa-solid fa-circle" style="font-size:4px;vertical-align:middle;"></i>&nbsp;
+  <i class="fa-solid fa-shield-halved"></i> All tools run in your browser &nbsp;<i class="fa-solid fa-circle" style="font-size:4px;vertical-align:middle;"></i>&nbsp;
+  <i class="fa-solid fa-user-slash"></i> No account &nbsp;<i class="fa-solid fa-circle" style="font-size:4px;vertical-align:middle;"></i>&nbsp;
+  <i class="fa-solid fa-ban"></i> No ads
+</footer>
+
+<script src="js/data.js"></script>
+<script src="js/audio.js"></script>
+<script src="js/fretboard.js"></script>
+<script src="js/tuner.js"></script>
+<script src="js/metronome.js"></script>
+<script src="js/chords.js"></script>
+<script src="js/circle-of-fifths.js"></script>
+<script src="js/transposer.js"></script>
+<script src="js/songs.js"></script>
+<script src="js/learning-paths.js"></script>
+<script src="js/scales.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

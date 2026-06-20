@@ -1,0 +1,55 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   SECTION 6: CHORD TRANSPOSER
+══════════════════════════════════════════════════════════════════════════════ */
+.trp-top {
+  display: flex; flex-wrap: wrap; gap: 12px;
+  align-items: center; margin-bottom: 20px;
+}
+.trp-key-display {
+  font-family: 'Playfair Display', serif;
+  font-size: 28px; font-weight: 900; color: var(--gold);
+  min-width: 60px;
+}
+.trp-shift-btns { display: flex; gap: 6px; flex-wrap: wrap; }
+.trp-shift-btn {
+  padding: 7px 13px; border-radius: 7px;
+  border: 1px solid var(--border-warm);
+  background: var(--wood-dark); color: var(--cream);
+  font-family: 'JetBrains Mono', monospace; font-size: 12px;
+  font-weight: 600; cursor: pointer; transition: all 0.2s;
+}
+.trp-shift-btn:hover { border-color: var(--border-gold); background: var(--wood-grain); }
+.trp-two-col {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+}
+@media (max-width: 640px) { .trp-two-col { grid-template-columns: 1fr; } }
+.trp-panel {
+  display: flex; flex-direction: column; gap: 8px;
+}
+.trp-label {
+  font-size: 10px; font-weight: 600; letter-spacing: 1.5px;
+  text-transform: uppercase; color: var(--text-muted);
+}
+.trp-textarea {
+  width: 100%; min-height: 260px; padding: 14px;
+  background: var(--wood-dark); color: var(--parchment);
+  border: 1px solid var(--border-warm); border-radius: 8px;
+  font-family: 'JetBrains Mono', monospace; font-size: 13px;
+  line-height: 1.8; resize: vertical; outline: none;
+  transition: border-color 0.2s;
+}
+.trp-textarea:focus { border-color: var(--border-gold); }
+.trp-output {
+  width: 100%; min-height: 260px; padding: 14px;
+  background: var(--wood-dark); color: var(--parchment);
+  border: 1px solid var(--border-warm); border-radius: 8px;
+  font-family: 'JetBrains Mono', monospace; font-size: 13px;
+  line-height: 1.8; white-space: pre-wrap; overflow-y: auto;
+}
+.chord-hl { color: var(--gold-bright); font-weight: 700; }
+.trp-detect-banner {
+  padding: 10px 14px; border-radius: 8px;
+  background: rgba(212,164,67,0.1); border: 1px solid var(--border-gold);
+  font-size: 13px; color: var(--gold); display: none;
+}
+
