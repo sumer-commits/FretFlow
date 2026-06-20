@@ -2126,7 +2126,12 @@ let mBpm         = 120;
 let mBeat        = 0;
 let mSig         = 4;
 let mOn          = false;
-let done         = JSON.parse(localStorage.getItem('ff4_done') || '{}');
+let done;
+try {
+  done = JSON.parse(localStorage.getItem('ff4_done') || '{}');
+} catch {
+  done = {};
+}
 
 /* ─── CONSTANTS ──────────────────────────────────────────────────────────── */
 const NOTES          = ['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'];
@@ -2175,9 +2180,19 @@ const SCALES = {
 
 /* ─── AUDIO ENGINE ───────────────────────────────────────────────────────── */
 let AudioCtx = null;
+
+// Tracks setTimeout ids for any in-flight note sequence (hearScale, hearCOFScale,
+// arpeggiate) so re-triggering cancels the previous run instead of overlapping it.
+let pendingNoteTimeouts = [];
+function scheduleNoteSequence(items, fn) {
+  pendingNoteTimeouts.forEach(clearTimeout);
+  pendingNoteTimeouts = items.map((item, i) =>
+    setTimeout(() => fn(item, i), item.delay)
+  );
+}
 function getAC() {
   if (!AudioCtx) AudioCtx = new (window.AudioContext || window.webkitAudioContext)();
-  if (AudioCtx.state === 'suspended') AudioCtx.resume();
+  if (AudioCtx.state === 'suspended') AudioCtx.resume().catch(() => {});
   return AudioCtx;
 }
 
@@ -2822,6 +2837,7 @@ const SCHED_INT    = 25;     // ms
 let pendulumAngle  = 0;      // current angle (degrees)
 let pendulumTarget = 32;     // swings ±32°
 let tapTimes       = [];     // for tap tempo
+let metroVisualTimeouts = []; // pending visual-beat setTimeout ids, cleared on stop
 
 // ─── AudioContext scheduler ───────────────────────────────────────────────
 function metroSchedule() {
@@ -2848,7 +2864,8 @@ function metroScheduleClick(beat, time) {
 
   // Schedule visual update at the moment the click fires
   const delay = Math.max(0, (time - ac.currentTime) * 1000);
-  setTimeout(() => metroVisualBeat(beat), delay);
+  const tid = setTimeout(() => metroVisualBeat(beat), delay);
+  metroVisualTimeouts.push(tid);
 }
 
 function metroAdvanceBeat() {
@@ -2913,6 +2930,8 @@ function stopMetronome() {
   mOn = false;
   if (metroSchedId) { clearInterval(metroSchedId); metroSchedId = null; }
   if (metroRafId)   { cancelAnimationFrame(metroRafId); metroRafId = null; }
+  metroVisualTimeouts.forEach(clearTimeout);
+  metroVisualTimeouts = [];
 
   // Reset pendulum to centre
   pendulumTarget = 0; pendulumAngle = 0;
@@ -3293,10 +3312,12 @@ function setChordType(t) {
 
 function arpeggiate(frets) {
   // Strum from low E to high E with a long ring-out.
-  frets.forEach((f, i) => {
-    if (f < 0) return;
+  const items = frets
+    .map((f, i) => ({ f, i, delay: i * 32 }))
+    .filter(item => item.f >= 0);
+  scheduleNoteSequence(items, ({ f, i }) => {
     const velocity = 0.42 + (5 - i) * 0.02;
-    setTimeout(() => playNote(OPEN_STRINGS[i] + f, 4.8, velocity), i * 32);
+    playNote(OPEN_STRINGS[i] + f, 4.8, velocity);
   });
 }
 
@@ -3476,9 +3497,8 @@ function hearCOFScale(keyName) {
   const rootIdx = NOTES.indexOf(keyName.replace(/b$/, '').replace(/#$/, ''));
   if (rootIdx < 0) return;
   const intervals = [0,2,4,5,7,9,11,12];
-  intervals.forEach((iv, i) => {
-    setTimeout(() => playNote(60 + rootIdx + iv, 0.7), i * 360);
-  });
+  const items = intervals.map((iv, i) => ({ iv, delay: i * 360 }));
+  scheduleNoteSequence(items, ({ iv }) => playNote(60 + rootIdx + iv, 0.7));
 }
 
 function arpeggiateByName(chordName) {
@@ -4702,9 +4722,8 @@ function hearScale(key) {
   const s = SCALES[key];
   const rootMidi = 60; // C4
   const allIntervals = [...s.i, 12]; // play scale + octave
-  allIntervals.forEach((iv, idx) => {
-    setTimeout(() => playNote(rootMidi + iv, 0.7), idx * 380);
-  });
+  const items = allIntervals.map((iv, idx) => ({ iv, delay: idx * 380 }));
+  scheduleNoteSequence(items, ({ iv }) => playNote(rootMidi + iv, 0.7));
 }
 
 function viewScaleOnFretboard(key) {
